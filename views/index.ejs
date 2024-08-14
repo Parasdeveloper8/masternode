@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+  <meta name="viewport" content="width=device-width,initial scale=1.0">
+    </head>
+    <body>
+      <!DOCTYPE html>
+      <html>
+          <head>
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          </head>
+          <body>
+              <h1>Add your tasks</h1>
+              <input type="text" id="text" placeholder="Enter your task here">
+              <button onclick="save()">Add</button>
+              <div id="taskList"></div>
+              <button onclick="getTask()">MYTask</button>
+              <script>
+              const save = () => {
+                const note = document.getElementById("text");
+                const taskList = document.getElementById("taskList");
+            
+                if (note.value.trim() !== "") { // Check if input is not empty
+                    const noteText = note.value;
+                    // Generate a unique key for each note
+                    const key = `note_${new Date().getTime()}`;
+                    localStorage.setItem(key, noteText);
+            
+                    // Create a paragraph element for the note
+                    const p = document.createElement("p");
+                    p.textContent = noteText;
+                    taskList.appendChild(p);
+            
+                    // Clear the input field
+                    note.value = "";
+                }
+            };
+            
+            const getTasks = () => {
+                const taskList = document.getElementById("taskList");
+            
+                // Clear existing tasks
+                taskList.innerHTML = "";
+            
+                // Retrieve all items from localStorage
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    const noteText = localStorage.getItem(key);
+            
+                    // Create a paragraph element for each stored note
+                    const p = document.createElement("p");
+                    p.textContent = noteText;
+                    taskList.appendChild(p);
+                }
+            };
+            
+            // Call getTasks to load existing tasks when the page loads
+            document.addEventListener("DOMContentLoaded", getTasks);
+            </script>
+          </body>
+      </html>
+      
+    </body>
+</html>
